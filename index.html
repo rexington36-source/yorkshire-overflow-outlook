@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Yorkshire Overflow Outlook</title>
+<meta name="description" content="Modelled chance that each Yorkshire Water storm overflow starts discharging in the next 6, 12 and 24 hours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="head-text">
+      <h1>Yorkshire Overflow Outlook</h1>
+      <p class="lede">The modelled chance that each Yorkshire Water storm overflow <em>starts</em> discharging in the next 6, 12 or 24 hours, refreshed hourly from weather forecasts and the live spill feed.</p>
+    </div>
+    <dl class="asof" id="asof" aria-live="polite"></dl>
+  </header>
+
+  <div class="banner" id="stale" hidden></div>
+
+  <section class="counts" id="counts" aria-label="Summary for the selected horizon"></section>
+
+  <section class="controls" aria-label="Filters">
+    <div class="seg" role="group" aria-label="Horizon">
+      <button type="button" data-h="6h">6 hours</button>
+      <button type="button" data-h="12h">12 hours</button>
+      <button type="button" data-h="24h" aria-pressed="true">24 hours</button>
+    </div>
+    <label class="field"><span>Search</span><input id="q" type="search" placeholder="Site, river or YWS ID" autocomplete="off"></label>
+    <label class="field"><span>Type</span><select id="type"><option value="">All overflow types</option></select></label>
+    <label class="check"><input id="onlyrisk" type="checkbox"> Possible or likely only</label>
+  </section>
+
+  <main class="main">
+    <div class="mapbox"><div id="map" role="region" aria-label="Map of storm overflows"></div></div>
+    <div class="listbox">
+      <div class="listhead"><span id="shown"></span><span class="sorthint">Sorted by chance of a discharge starting</span></div>
+      <ol class="list" id="list"></ol>
+      <button type="button" class="more" id="more" hidden>Show more</button>
+    </div>
+  </main>
+
+  <aside class="detail" id="detail" hidden aria-live="polite"></aside>
+
+  <section class="explain">
+    <h2>How to read this</h2>
+    <div class="cols">
+      <p><b>Chance a discharge starts</b> is the model's probability that a new discharge begins within the window, after at least 12 hours without one. Bands: <span class="pill unlikely">unlikely</span> under 5%, <span class="pill possible">possible</span> 5–25%, <span class="pill likely">likely</span> over 25%. It is a probability, not a warning.</p>
+      <p><b>No probability is shown</b> while an overflow is discharging, for 12 hours after a discharge ends, or when its monitor is offline. <b>Dry-weather check</b> counts discharges that began with no rain in the previous 48 hours by both forecast-model rainfall and Environment Agency rain gauges, with no discharge in the day before. A gauge check counts only if a rain gauge within 15 km has data for at least 90% of those 48 hours; from 30 October 2026 the counts were revised on that basis (previously any nearby gauge counted, even one with no data for the period).</p>
+      <p><b>The model</b> uses ECMWF forecast and recent rainfall (via Open-Meteo), each overflow's recent discharge history, and the Environment Agency's Event Duration Monitoring records. Every forecast is stored and later checked against what happened.</p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div id="foot-status"></div>
+    <p>Modelled estimates, not measurements.</p>
+    <p>Storm overflows discharging in heavy rain are permitted under environmental permits and are not in themselves unlawful.</p>
+    <p>The underlying Event Duration Monitoring data has not been verified by the Environment Agency.</p>
+    <p>A dry-weather flag is an anomaly worth investigating, not an accusation.</p>
+    <p>EDM datasets © Environment Agency copyright and/or database right.</p>
+    <p>This uses Environment Agency rainfall data from the real-time data API (Beta).</p>
+    <p>Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a> (CC BY 4.0), ECMWF open data.</p>
+    <p>Map tiles © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+    <p id="foot-model"></p>
+  </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
